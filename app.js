@@ -1,9 +1,9 @@
 'use strict';
 const products = [
-  {id:'package-1',name:'曲奇制裁盒子 · 套餐 1',short:'套餐 1',category:'package',number:'01',price:3500,description:'35 元档 · 详情见商品价格图',tone:['#eee8fc','#8b6bca','#d1bcee','#aa87d9','#8157b9']},
-  {id:'package-2',name:'曲奇制裁盒子 · 套餐 2',short:'套餐 2',category:'package',number:'02',price:8000,description:'80 元档 · 详情见商品价格图',tone:['#e7eefc','#6283b9','#b7cbee','#84a7dc','#5f86c2']},
-  {id:'package-3',name:'曲奇制裁盒子 · 套餐 3',short:'套餐 3',category:'package',number:'03',price:18800,description:'188 元档 · 详情见商品价格图',tone:['#e8f1ed','#628f85','#bbdcd0','#8cbcac','#629785']},
-  {id:'custom',name:'曲奇制裁盒子 · 定制',short:'定制套餐',category:'custom',number:'04',price:23500,description:'235 元档 · 请先沟通定制需求',tone:['#f6eaf0','#b17b96','#eac2d6','#d699b5','#b97696']}
+  {id:'package-1',name:'曲奇·星盒 · 套餐 1',short:'套餐 1',category:'package',number:'01',price:3500,description:'35 元档 · 详情见商品价格图',tone:['#eee8fc','#8b6bca','#d1bcee','#aa87d9','#8157b9']},
+  {id:'package-2',name:'曲奇·星盒 · 套餐 2',short:'套餐 2',category:'package',number:'02',price:8000,description:'80 元档 · 详情见商品价格图',tone:['#e7eefc','#6283b9','#b7cbee','#84a7dc','#5f86c2']},
+  {id:'package-3',name:'曲奇·星盒 · 套餐 3',short:'套餐 3',category:'package',number:'03',price:18800,description:'188 元档 · 详情见商品价格图',tone:['#e8f1ed','#628f85','#bbdcd0','#8cbcac','#629785']},
+  {id:'custom',name:'曲奇·星盒 · 定制',short:'定制套餐',category:'custom',number:'04',price:23500,description:'235 元档 · 请先沟通定制需求',tone:['#f6eaf0','#b17b96','#eac2d6','#d699b5','#b97696']}
 ];
 const paymentMethods = {
   alipay:{src:'assets/alipay-payment.jpg',name:'支付宝',alt:'店主提供的支付宝收款码',hint:'用支付宝扫描，按上方金额付款',filename:'劫禾-支付宝收款码.jpg'},
@@ -16,15 +16,40 @@ const icon=(name)=>`<svg class="icon" aria-hidden="true"><use href="#i-${name}"/
 const amount=(cents)=>(cents/100).toFixed(2);
 function artwork(){return `<svg class="box-art" viewBox="0 0 140 140" aria-hidden="true"><ellipse cx="72" cy="119" rx="35" ry="6" fill="currentColor" opacity=".09"/><g><path class="box-top" d="m70 30 39 22-39 23-39-23Z"/><path class="box-left" d="M31 52v44l39 23V75Z"/><path class="box-right" d="m70 75 39-23v44l-39 23Z"/><path class="box-ribbon" d="m54 39 13-7 39 23-13 8ZM55 66l13 7v44l-13-8Z"/><path class="box-outline" d="m70 30 39 22v44l-39 23-39-23V52Zm0 45v44M31 52l39 23 39-23"/><path d="m85 79 13-8v10l-13 8Z" fill="#ffffffb0"/></g><path class="art-spark" d="m117 26 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z"/><circle cx="21" cy="84" r="2.5" fill="#fff" opacity=".8"/><path d="m24 30 1 4 4 1-4 1-1 4-1-4-4-1 4-1Z" fill="#fff"/></svg>`}
 function getFilteredProducts(){const query=$('#search').value.trim().toLowerCase();return products.filter(p=>(category==='all'||p.category===category)&&(p.name+' '+p.short).toLowerCase().includes(query));}
-function renderProducts(){const visible=getFilteredProducts();$('#result-count').textContent=`${visible.length} 款商品`;$('#product-grid').innerHTML=visible.map((p,index)=>`<article class="product-card" style="--delay:${index*55}ms;--cover-bg:${p.tone[0]};--accent:${p.tone[1]};--box-top:${p.tone[2]};--box-left:${p.tone[3]};--box-right:${p.tone[4]}"><button class="product-cover" type="button" data-open="pricing" aria-label="查看${p.short}商品价格图"><span class="cover-title">曲奇制裁盒子</span>${artwork()}<span class="cover-pill">${p.short}</span><span class="cover-number">${p.number}</span></button><div class="product-body"><div class="product-kicker">曲奇制裁盒子</div><h2 class="product-title">${p.short}</h2><p class="product-description">${p.description}</p><div class="price-row"><span class="price"><small>¥</small>${Math.floor(p.price/100)}<span class="price-decimal">.00</span></span><span class="delivery-tag">人工交付</span></div><button class="buy-button" type="button" data-buy="${p.id}" aria-label="购买${p.name}">立即购买${icon('arrow')}</button></div></article>`).join('')||`<div class="empty-state">${icon('search')}<p>没有找到相关商品</p><button type="button" id="reset-search">查看全部商品</button></div>`;}
+function renderProducts(){const visible=getFilteredProducts();$('#result-count').textContent=`${visible.length} 款商品`;$('#product-grid').innerHTML=visible.map((p,index)=>`<article class="product-card" style="--delay:${index*55}ms;--cover-bg:${p.tone[0]};--accent:${p.tone[1]};--box-top:${p.tone[2]};--box-left:${p.tone[3]};--box-right:${p.tone[4]}"><button class="product-cover" type="button" data-open="pricing" aria-label="查看${p.short}商品价格图"><span class="cover-title">曲奇·星盒</span>${artwork()}<span class="cover-pill">${p.short}</span><span class="cover-number">${p.number}</span></button><div class="product-body"><div class="product-kicker">曲奇·星盒</div><h2 class="product-title">${p.short}</h2><p class="product-description">${p.description}</p><div class="price-row"><span class="price"><small>¥</small>${Math.floor(p.price/100)}<span class="price-decimal">.00</span></span><span class="delivery-tag">人工交付</span></div><button class="buy-button" type="button" data-buy="${p.id}" aria-label="购买${p.name}">立即购买${icon('arrow')}</button></div></article>`).join('')||`<div class="empty-state">${icon('search')}<p>没有找到相关商品</p><button type="button" id="reset-search">查看全部商品</button></div>`;}
 function selectCategory(next){category=next;$$('[data-category]').forEach(b=>{const active=b.dataset.category===category;b.classList.toggle('active',active);if(b.classList.contains('filter'))b.setAttribute('aria-pressed',String(active));else b.setAttribute('aria-current',active?'page':'false')});renderProducts();}
 function updateScrollLock(){document.body.classList.toggle('locked',$('#sidebar').classList.contains('open')||!!document.querySelector('dialog[open]'));}
 function openDrawer(){drawerTrigger=document.activeElement;$('#sidebar').classList.add('open');$('#drawer-backdrop').classList.add('open');$('#menu-button').setAttribute('aria-expanded','true');$('#sidebar').inert=false;$('#sidebar').setAttribute('role','dialog');$('#sidebar').setAttribute('aria-modal','true');updateScrollLock();$('#close-sidebar').focus();}
 function closeDrawer(returnFocus=true){$('#sidebar').classList.remove('open');$('#drawer-backdrop').classList.remove('open');$('#menu-button').setAttribute('aria-expanded','false');$('#sidebar').removeAttribute('role');$('#sidebar').removeAttribute('aria-modal');if(window.matchMedia('(max-width:800px)').matches)$('#sidebar').inert=true;updateScrollLock();if(returnFocus&&drawerTrigger)drawerTrigger.focus();}
 function openDialog(id){closeDrawer(false);const dialog=document.getElementById(id);if(!dialog.open)dialog.showModal();updateScrollLock();}
 function updateTotal(){if(!selectedProduct)return;$('#checkout-product-name').textContent=selectedProduct.short;$('#quantity').textContent=quantity;$('#payment-total').textContent=amount(selectedProduct.price*quantity);$('#minus').disabled=quantity<=1;$('#plus').disabled=quantity>=99;}
-function selectPayment(method){const data=paymentMethods[method];if(!data)return;$$('[data-method]').forEach(b=>{const active=b.dataset.method===method;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active))});$('#payment-code').src=data.src;$('#payment-code').alt=data.alt;$('#code-frame').classList.toggle('wechat',method==='wechat');$('#pay-method-hint').textContent=data.hint;$('#download-code').href=data.src;$('#download-code').download=data.filename;$('#full-code').href=data.src;}
-function showInfo(type){if(type==='plus'){$('#info-title').textContent='Plus 套餐';$('#info-content').innerHTML='<p>商品价格图标注 Plus 需私信获取，具体价格和内容请先与店主确认。</p><p class="footnote">当前未提供店主联系方式，请通过你与店主原有的联系渠道咨询。</p>';}else{$('#info-title').textContent='购买须知';$('#info-content').innerHTML='<ol><li>先查看商品价格图，确认套餐内容；定制套餐请先沟通需求。</li><li>选择套餐和数量，使用支付宝或微信赞赏码，手动填写页面显示的金额。</li><li>付款前与店主确认交付方式，付款后保留凭证，由店主核实到账后交付。</li></ol><p class="footnote">本站当前不自动验证到账、不生成订单，也不自动发卡。联系店主请使用你们原有的联系渠道。</p>';}openDialog('info-dialog');}
+let activePayment='alipay';
+const qrState={alipay:'loading',wechat:'loading'};
+function refreshQR(){
+  const state=qrState[activePayment];
+  $$('.qr-layer').forEach(layer=>{const active=layer.dataset.qr===activePayment;layer.classList.toggle('is-visible',active&&state==='ready');layer.setAttribute('aria-hidden',String(!active||state!=='ready'));});
+  $('#code-frame').setAttribute('aria-busy',String(state==='loading'));
+  $('#qr-status').hidden=state==='ready';
+  $('#qr-status').textContent=state==='error'?'图片加载失败，请点「查看原图」':'收款码加载中…';
+}
+function preparePaymentImages(){
+  Object.keys(paymentMethods).forEach(method=>{
+    const img=$('#qr-'+method);
+    const ready=async()=>{try{if(img.decode)await img.decode();}catch{}qrState[method]=img.naturalWidth?'ready':'error';refreshQR();};
+    img.addEventListener('load',ready);
+    img.addEventListener('error',()=>{qrState[method]='error';refreshQR();});
+    if(img.complete)ready();
+  });
+}
+function selectPayment(method){
+  const data=paymentMethods[method];if(!data)return;
+  activePayment=method;
+  $$('[data-method]').forEach(b=>{const active=b.dataset.method===method;b.classList.toggle('selected',active);b.setAttribute('aria-pressed',String(active));});
+  refreshQR();
+  $('#pay-method-hint').textContent=data.hint;
+  $('#download-code').href=data.src;$('#download-code').download=data.filename;$('#full-code').href=data.src;
+}
+function showInfo(type){if(type==='plus'){$('#info-title').textContent='Plus 套餐';$('#info-content').innerHTML='<p>商品价格图标注 Plus 需私信获取，具体价格和内容请先与店主确认。</p><p class="footnote"><a href="https://qm.qq.com/q/8NzsrK4VPy" target="_blank" rel="noopener noreferrer">加入官方 QQ 群，联系店主咨询 ↗</a></p>';}else{$('#info-title').textContent='购买须知';$('#info-content').innerHTML='<ol><li>先查看商品价格图，确认套餐内容；定制套餐请先沟通需求。</li><li>选择套餐和数量，使用支付宝或微信赞赏码，手动填写页面显示的金额。</li><li>付款前与店主确认交付方式，付款后保留凭证，由店主核实到账后交付。</li></ol><p class="footnote">本站当前不自动验证到账、不生成订单，也不自动发卡。<a href="https://qm.qq.com/q/8NzsrK4VPy" target="_blank" rel="noopener noreferrer">加入官方 QQ 群联系店主 ↗</a></p>';}openDialog('info-dialog');}
 function setTheme(dark){document.body.classList.toggle('dark',dark);$('#theme-button').setAttribute('aria-pressed',String(dark));$('#theme-button').setAttribute('aria-label',dark?'切换浅色模式':'切换深色模式');$('#theme-button use').setAttribute('href',dark?'#i-sun':'#i-moon');document.querySelector('meta[name="theme-color"]').content=dark?'#191620':'#f6f5fb';try{localStorage.setItem('jiehe-theme',dark?'dark':'light')}catch{}}
 function toast(message){$('#toast').textContent=message;$('#toast').classList.add('visible');clearTimeout(toast.timer);toast.timer=setTimeout(()=>$('#toast').classList.remove('visible'),3000);}
 document.addEventListener('click',(event)=>{const categoryButton=event.target.closest('[data-category]');if(categoryButton){selectCategory(categoryButton.dataset.category);if($('#sidebar').classList.contains('open'))closeDrawer();return;}const buyButton=event.target.closest('[data-buy]');if(buyButton){selectedProduct=products.find(p=>p.id===buyButton.dataset.buy);quantity=1;updateTotal();selectPayment('alipay');openDialog('checkout');return;}const opener=event.target.closest('[data-open]');if(opener){if(opener.dataset.open==='pricing')openDialog('pricing-dialog');else showInfo(opener.dataset.open);return;}const closer=event.target.closest('[data-close]');if(closer){document.getElementById(closer.dataset.close).close();return;}const methodButton=event.target.closest('[data-method]');if(methodButton){selectPayment(methodButton.dataset.method);return;}if(event.target.closest('#reset-search')){$('#search').value='';selectCategory('all');}});
@@ -40,3 +65,6 @@ $$('dialog').forEach(dialog=>{dialog.addEventListener('close',updateScrollLock);
 document.addEventListener('keydown',e=>{if(!$('#sidebar').classList.contains('open'))return;if(e.key==='Escape'){e.preventDefault();closeDrawer();return;}if(e.key==='Tab'){const buttons=Array.from($('#sidebar').querySelectorAll('button,a[href]')).filter(el=>el.getClientRects().length);const first=buttons[0],last=buttons.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus()}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus()}}});
 const mobileMedia=window.matchMedia('(max-width:800px)');function syncSidebar(){if(!mobileMedia.matches)closeDrawer(false);$('#sidebar').inert=mobileMedia.matches&&!$('#sidebar').classList.contains('open');}mobileMedia.addEventListener('change',syncSidebar);syncSidebar();
 let savedTheme='light';try{savedTheme=localStorage.getItem('jiehe-theme')||'light'}catch{}setTheme(savedTheme==='dark');renderProducts();
+
+
+preparePaymentImages();selectPayment("alipay");

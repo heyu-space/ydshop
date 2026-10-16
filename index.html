@@ -6,8 +6,9 @@
   <meta name="theme-color" content="#f6f5fb">
   <meta name="description" content="劫禾数字商店，浏览商品套餐、价格与付款信息。">
   <title>劫禾 · 数字商店</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261016">
+  <script src="app.js?v=20261016" defer></script>
+<link rel="preload" as="image" href="assets/alipay-payment.jpg"><link rel="preload" as="image" href="assets/wechat-payment.png">
 </head>
 <body>
   <svg class="svg-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -49,10 +50,10 @@
         <button class="side-link" type="button" data-open="pricing"><svg class="icon"><use href="#i-image"/></svg>商品价格图<svg class="icon side-arrow"><use href="#i-arrow"/></svg></button>
         <button class="side-link" type="button" data-open="guide"><svg class="icon"><use href="#i-info"/></svg>购买须知<svg class="icon side-arrow"><use href="#i-arrow"/></svg></button>
       </nav>
-      <div class="sidebar-foot"><span class="small-mark">J.</span><span>劫禾 · 数字商店<small>找到适合你的那一款</small></span></div>
+      <a href="https://qm.qq.com/q/8NzsrK4VPy" target="_blank" rel="noopener noreferrer" class="group-link">加入官方 QQ 群 <span aria-hidden="true">↗</span></a><div class="sidebar-foot"><span class="small-mark">J.</span><span>劫禾 · 数字商店<small>找到适合你的那一款</small></span></div>
     </aside>
     <main id="products">
-      <section class="store-heading"><div><h1>挑选你的下一份好物<span class="heading-dot">.</span></h1><p>曲奇制裁盒子 · 套餐专区</p></div><button class="text-button pricing-shortcut" data-open="pricing" type="button">价格图<svg class="icon"><use href="#i-arrow"/></svg></button></section>
+      <section class="store-heading"><div><h1>挑选你的下一份好物<span class="heading-dot">.</span></h1><p>曲奇·星盒 · 套餐专区</p></div><button class="text-button pricing-shortcut" data-open="pricing" type="button">价格图<svg class="icon"><use href="#i-arrow"/></svg></button></section>
       <div class="searchbar"><svg class="icon"><use href="#i-search"/></svg><input id="search" type="search" autocomplete="off" placeholder="搜索商品、套餐…" aria-label="搜索商品"><span class="search-hint">快速查找</span></div>
       <div class="filterbar"><div class="filters" role="group" aria-label="商品分类"><button type="button" class="filter active" data-category="all" aria-pressed="true">全部商品</button><button type="button" class="filter" data-category="package" aria-pressed="false">标准套餐</button><button type="button" class="filter" data-category="custom" aria-pressed="false">定制</button></div><span id="result-count" aria-live="polite">4 款商品</span></div>
       <section id="product-grid" class="product-grid" aria-label="商品列表"></section>
@@ -63,17 +64,18 @@
   <dialog id="checkout" class="checkout-dialog" aria-labelledby="checkout-title">
     <div class="dialog-heading"><div><span class="eyebrow">选好啦，下一步</span><h2 id="checkout-title">确认购买</h2></div><button class="icon-button" type="button" data-close="checkout" aria-label="关闭购买窗口"><svg class="icon"><use href="#i-close"/></svg></button></div>
     <div class="checkout-body">
-      <div class="checkout-product"><div class="checkout-icon"><svg class="icon"><use href="#i-box"/></svg></div><div><strong id="checkout-product-name"></strong><p>曲奇制裁盒子</p></div><button class="text-button" type="button" data-open="pricing">详情</button></div>
+      <div class="checkout-product"><div class="checkout-icon"><svg class="icon"><use href="#i-box"/></svg></div><div><strong id="checkout-product-name"></strong><p>曲奇·星盒</p></div><button class="text-button" type="button" data-open="pricing">详情</button></div>
       <div class="quantity-row"><label>购买数量</label><div class="stepper"><button id="minus" type="button" aria-label="减少数量">−</button><output id="quantity" aria-live="polite">1</output><button id="plus" type="button" aria-label="增加数量">+</button></div></div>
       <div class="total-row"><span>应付金额</span><strong><small>¥</small><span id="payment-total">35.00</span></strong></div>
       <div class="payment-tabs" role="group" aria-label="付款方式"><button type="button" class="payment-tab selected" data-method="alipay" aria-pressed="true"><span class="pay-logo alipay-logo">支</span>支付宝</button><button type="button" class="payment-tab" data-method="wechat" aria-pressed="false"><span class="pay-logo wechat-logo">赏</span>微信赞赏</button></div>
-      <div class="payment-code-wrap"><div class="code-frame" id="code-frame"><img id="payment-code" src="assets/alipay-payment.jpg" alt="店主提供的支付宝收款码" width="1024" height="1536"></div><p id="pay-method-hint">用支付宝扫描，按上方金额付款</p></div>
+      <div class="payment-code-wrap"><div class="code-frame" id="code-frame" aria-busy="true"><div class="qr-layer" data-qr="alipay" aria-hidden="false"><img id="qr-alipay" src="assets/alipay-payment.jpg" alt="店主提供的支付宝收款码" width="1024" height="1536" decoding="async" loading="eager"></div><div class="qr-layer wechat" data-qr="wechat" aria-hidden="true"><img id="qr-wechat" src="assets/wechat-payment.png" alt="店主提供的微信赞赏码" width="1047" height="1047" decoding="async" loading="eager"></div><span id="qr-status" role="status">收款码加载中…</span></div><p id="pay-method-hint">用支付宝扫描，按上方金额付款</p></div>
       <div class="payment-actions"><a id="download-code" class="primary-button" href="assets/alipay-payment.jpg" download="劫禾-支付宝收款码.jpg"><svg class="icon"><use href="#i-download"/></svg>保存收款码</a><a id="full-code" class="secondary-button" href="assets/alipay-payment.jpg" target="_blank" rel="noopener">查看原图</a></div>
-      <p class="payment-note">付款前请先与店主确认交付方式；付款后保留凭证，由店主核实到账并交付。</p>
+      <a href="https://qm.qq.com/q/8NzsrK4VPy" target="_blank" rel="noopener noreferrer" class="group-link">加入官方 QQ 群 <span aria-hidden="true">↗</span></a><p class="payment-note">付款前请先与店主确认交付方式；付款后保留凭证，由店主核实到账并交付。</p>
     </div>
   </dialog>
-  <dialog id="pricing-dialog" class="pricing-dialog" aria-labelledby="pricing-title"><div class="dialog-heading"><div><span class="eyebrow">商品说明</span><h2 id="pricing-title">曲奇制裁盒子 · 价格图</h2></div><button class="icon-button" type="button" data-close="pricing-dialog" aria-label="关闭价格图"><svg class="icon"><use href="#i-close"/></svg></button></div><p class="image-tip">点击图片查看原尺寸，方便放大阅读。</p><a class="pricing-image-link" href="assets/product-pricing.jpg" target="_blank" rel="noopener"><img src="assets/product-pricing.jpg" alt="店主提供的曲奇制裁盒子商品价格与套餐说明图" width="1536" height="1298"></a></dialog>
+  <dialog id="pricing-dialog" class="pricing-dialog" aria-labelledby="pricing-title"><div class="dialog-heading"><div><span class="eyebrow">商品说明</span><h2 id="pricing-title">曲奇·星盒 · 价格图</h2></div><button class="icon-button" type="button" data-close="pricing-dialog" aria-label="关闭价格图"><svg class="icon"><use href="#i-close"/></svg></button></div><p class="image-tip">点击图片查看原尺寸，方便放大阅读。</p><a class="pricing-image-link" href="assets/product-poster.png" target="_blank" rel="noopener"><img src="assets/product-poster.png" alt="店主提供的曲奇·星盒商品价格与套餐说明图" width="1024" height="1536"></a><p class="image-tip"><a href="assets/product-pricing.jpg" target="_blank" rel="noopener">查看原始详细功能说明 ↗</a></p></dialog>
   <dialog id="info-dialog" class="info-dialog" aria-labelledby="info-title"><div class="dialog-heading"><h2 id="info-title"></h2><button class="icon-button" type="button" data-close="info-dialog" aria-label="关闭说明"><svg class="icon"><use href="#i-close"/></svg></button></div><div id="info-content" class="info-content"></div><button class="primary-button info-close" type="button" data-close="info-dialog">知道了</button></dialog>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
+
